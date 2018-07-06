@@ -1,0 +1,1 @@
+curl "https://android.googleapis.com/gcm/send/eiTKTFSOCFE:APA91bGitOq8108hUPT29gWARE9q9Xh9Pa7vaRSKoX3GYNxzhzW5eY9QAYw6X15ZsIHcuTXzUJ8_bOONcbpw2Y587GppUUNM_EEfxazrFBoCDWIyxhs2d1ljkTvk4kaXCMxe55GzF20o" --request POST --header "TTL: 60" --header "Content-Length: 0" \ --header "Authorization: key=AIzaSyCEONcOU1483XXg4DyeuxtO3edKvgx9kH8"

@@ -1,0 +1,7 @@
+{
+  "name": "Small Sharp Tool",
+  "description": "This app does one little thing, and does it well.",
+  "keywords": ["productivity", "HTML5", "scalpel"],
+  "repository": "https://git.heroku.com/chat-app-vue-socket.git",
+  "logo": "https://small-sharp-tool.com/logo.svg"
+}
