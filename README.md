@@ -1,6 +1,6 @@
-# INGAT SHOLAT API
+# Waktu Sholat - API dan Push Notification
 
-API yang memberikan jadwal sholat harian kepada anda secara gratis sesuai dengan kota yang anda inginkan dan mengirimkan push notification ketika waktu sholat telah tiba
+API yang memberikan jadwal sholat harian secara gratis sesuai dengan kota yang diinginkan dan mengirimkan push notification ketika waktu sholat telah tiba.
 
 ## API
 
