@@ -13,19 +13,11 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "moment": "^2.22.2",
-    "mysql": "^2.15.0",
     "request": "^2.87.0",
-<<<<<<< HEAD
     "web-push": "^3.3.1",
-    "pg" : "^7.4.3"
+    "pg": "^7.4.3"
   },
   "engines": {
     "node": "8.11.2"
-=======
-    "web-push": "^3.3.1"
-  },
-  "engines": {
-    "node": "8.9.4"
->>>>>>> e3cd10bf78c7bf5d5e865ca1e4682f5f04b741c8
   }
 }
