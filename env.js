@@ -1,0 +1,7 @@
+module.exports.host = 'localhost'
+module.exports.user = 'root'
+module.exports.password = ''
+module.exports.database = 'ingatsholat'
+module.exports.gcmAPIKey = 'AIzaSyCEONcOU1483XXg4DyeuxtO3edKvgx9kH8'
+module.exports.authorization = 'Bearer hello-prayer-app'
+module.exports.notifAuthorization = 'helloworldprayer-app'

@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const moment = require('moment')
-const mysql = require('mysql')
 const pg = require('pg')
 const app = express()
 const webPush = require('web-push')
@@ -28,7 +27,7 @@ const client = new Client({
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
@@ -78,7 +77,7 @@ app.post('/', (req, res) => {
   //   return res.status(401).json(req.headers)
   const city = req.body.city
   console.log(city)
-  request.get(env.endpoint(city), function(err, response, body) {
+  request.get(env.endpoint(city), function (err, response, body) {
     if (err) return res.json(err)
     res.json(JSON.parse(body))
     console.log(JSON.parse(body))
@@ -224,73 +223,73 @@ const startNotification = async () => {
     const last = rows.length - 1
     rows.forEach((el, idx) => {
       const updated = el.updated
-      ;['shubuh', 'shuruq', 'dzuhur', 'ashar', 'maghrib', 'isya'].forEach(
-        (sholat, idx) => {
-          const temp = el[sholat].split(' ')
-          let time =
-            temp[1] === 'pm'
-              ? moment(temp[0], 'H:mm')
+        ;['shubuh', 'shuruq', 'dzuhur', 'ashar', 'maghrib', 'isya'].forEach(
+          (sholat, idx) => {
+            const temp = el[sholat].split(' ')
+            let time =
+              temp[1] === 'pm'
+                ? moment(temp[0], 'H:mm')
                   .add(12, 'hours')
                   .format('HH:mm')
-              : moment(temp[0], 'H:mm').format('HH:mm')
-          const payload = {
-            kota: el.location,
-            sholat
-          }
-          if (now === time && (!updated || !updated.includes(sholat))) {
-            console.log('NOTIFICATION BEGIN')
-            webPush
-              .sendNotification(
-                {
-                  endpoint: el.endpoint,
-                  keys: {
-                    auth: el.auth,
-                    p256dh: el.p256dh
-                  }
-                },
-                JSON.stringify(payload),
-                options
-              )
-              .then(async res => {
-                console.log(res)
-                await client.query(
-                  `UPDATE endpoint SET updated=$1 WHERE endpoint=$2`,
-                  [updated + sholat, el.endpoint],
-                  (error, res) => {
-                    if (error) return console.log('error', error)
-                    console.log('UPDATE', res)
-                  }
+                : moment(temp[0], 'H:mm').format('HH:mm')
+            const payload = {
+              kota: el.location,
+              sholat
+            }
+            if (now === time && (!updated || !updated.includes(sholat))) {
+              console.log('NOTIFICATION BEGIN')
+              webPush
+                .sendNotification(
+                  {
+                    endpoint: el.endpoint,
+                    keys: {
+                      auth: el.auth,
+                      p256dh: el.p256dh
+                    }
+                  },
+                  JSON.stringify(payload),
+                  options
                 )
-                console.log('NOTIFICATION END')
-              })
-              .catch(res => console.error(res))
+                .then(async res => {
+                  console.log(res)
+                  await client.query(
+                    `UPDATE endpoint SET updated=$1 WHERE endpoint=$2`,
+                    [updated + sholat, el.endpoint],
+                    (error, res) => {
+                      if (error) return console.log('error', error)
+                      console.log('UPDATE', res)
+                    }
+                  )
+                  console.log('NOTIFICATION END')
+                })
+                .catch(res => console.error(res))
+            }
           }
-        }
-      )
+        )
     })
   } catch (err) {
     console.log(err)
   }
   if (/(?:6:01|24:00)/gi.test(now)) reset()
 }
-;(() => {
-  client.connect()
-  setInterval(() => {
-    try {
-      startNotification()
-      request.get('https://app-caller.herokuapp.com', function(
-        err,
-        response,
-        body
-      ) {
-        if (err) return console.log(err)
-        console.log(JSON.parse(body))
-      })
-    } catch (err) {
-      console.log('ERROR : ', err)
-    }
-  }, 1000 * 60)
-})()
+  ; (() => {
+    client.connect()
+    setInterval(() => {
+      try {
+        startNotification()
+        request.get('https://app-caller.herokuapp.com', function (
+          err,
+          response,
+          body
+        ) {
+          if (err) return console.log(err)
+          console.log(JSON.parse(body))
+        })
+      } catch (err) {
+        console.log('ERROR : ', err)
+      }
+    }, 1000 * 60)
+  })()
 
 app.listen(process.env.PORT || 3000, async () => {
   console.log('listening on port 3000, or whatever')
