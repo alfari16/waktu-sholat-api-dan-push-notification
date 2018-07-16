@@ -2,6 +2,9 @@
 
 API yang memberikan jadwal sholat harian secara gratis sesuai dengan kota yang diinginkan dan mengirimkan push notification ketika waktu sholat telah tiba.
 
+## Endpoint 
++ https://ingat-sholat.herokuapp.com
+
 ## API
 
 ```json
@@ -37,4 +40,12 @@ API yang memberikan jadwal sholat harian secara gratis sesuai dengan kota yang d
   }
 }
 
+```
+
+## Note (Catatan)
+Anda harus menambahkan gcm_sender_id pada manifest.json anda
+```json
+{
+  "gcm_sender_id": "1038127839342"
+}
 ```
